@@ -1,11 +1,9 @@
 <template>
-  <div class="add-blog">
+  <div id="add-blog">
       <h2>添加博客</h2>
       <form v-if="!subminted">
         <label>博客标题</label>
         <input type="text" v-model="blog.title" />
-
-        <br>
         
         <label>博客内容</label>
         <textarea v-model="blog.content"></textarea>
@@ -33,7 +31,7 @@
         <h3>你的博客发送成功了！</h3>
       </div>
 
-      <div id="previer">
+      <div id="preview">
         <h3>博客总览</h3>
         <p>博客标题:{{blog.title}}</p>
         <p>博客内容:</p>
@@ -67,7 +65,7 @@ export default {
   },
   methods:{
     post:function(){
-      this.$http.post("http://jsonplaceholder.typicode.com/posts",{
+      this.$http.post('http://jsonplaceholder.typicode.com/posts',{
         title:this.blog.title,
         body:this.blog.content,
         userId:1
@@ -80,8 +78,69 @@ export default {
   }
 }
 </script>
-
+#
 
 <style scoped>
 
+#add-blog *{
+ box-sizing: border-box;
+}
+
+#add-blog{
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 20px;
+}
+
+#add-blog h2{
+  text-align: center;
+}
+
+label{
+  display: block;
+  margin: 20px 0 10px;
+}
+
+input[type="text"],textarea,select{
+  display: block;
+  width: 100%;
+  padding: 8px;
+}
+
+
+textarea{
+  height: 200px;
+}
+
+#checkboxes label{
+  display:inline-block;
+  margin-top: 0;
+}
+
+#checkboxes input{
+  display: inline-block;
+  margin-right: 10px;
+}
+
+button{
+  display: block;
+  margin: 20px 0;
+  background:crimson;
+  color: #ffffff;
+  border: 0;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#preview{
+  padding: 10px 20px;
+  border: 3px dotte #ccc;
+  margin:30px 0;
+}
+
+h3{
+  margin-top: 10px;
+}
 </style>
