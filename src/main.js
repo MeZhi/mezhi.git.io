@@ -5,7 +5,12 @@ import App from './App'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import Routes from './routes'
+import axios from 'axios'
 
+// 全局配置axios
+// axios.defaults.baseURL = 'https://my-blog-d048a.firebaseio.com'
+// axios.defaults.headers.common['Authorization'] = 'Token'
+// axios.defaults.headers.post['Content-type'] = 'application/urlencode'
 
 Vue.config.productionTip = false
 
@@ -21,7 +26,7 @@ Vue.use(VueRouter)
 Vue.directive('theme',{
   bind(el,binding,vnode){
     if(binding.value == 'wide'){
-      el.style.maxWidth = "1260px"
+      el.style.maxWidth = "1280px"
     }else if(binding.value == 'narrow'){
       el.style.maxWidth = '560px'
     }

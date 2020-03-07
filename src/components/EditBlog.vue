@@ -1,6 +1,6 @@
 <template>
-  <div id="add-blog" v-theme:column="'wide'">
-      <h2>添加博客</h2>
+  <div id="edit-blog" v-theme:column="'wide'">
+      <h2>编辑博客</h2>
       <form v-if="!subminted">
         <label>博客标题</label>
         <input type="text" v-model="blog.title" />
@@ -24,7 +24,7 @@
             {{author}}
           </option>
         </select>
-        <button v-on:click.prevent="post">添加博客</button>
+        <button v-on:click.prevent="post">编辑博客</button>
       </form>
   
       <div v-if="subminted">
@@ -48,30 +48,36 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 export default {
-  name: 'add-blog',
+  name: 'edit-blog',
   data () {
     return {
-      blog:{
-        title:"",
-        content:"",
-        categories:[],
-        author:""
-      },
+        id:this.$route.params.id,
+      blog:{},
       authors:["TaylorSwift","Jerry","Tom"],
       subminted:false
     }
   },
   methods:{
+    fetchData(){
+    //    console.log(this.id);
+    this.$http.get('https://my-blog-d048a.firebaseio.com/posts/'+ this.id+".json")
+    .then(response => {
+        // console.log(response);
+            this.blog = response.body;
+        })
+    },
     post:function(){
-      // var _this = this;
-      axios.post('https://my-blog-d048a.firebaseio.com/posts.json',this.blog)
-        .then((data) => {
-          // console.log(data);
+      this.$http.put('https://my-blog-d048a.firebaseio.com/posts/'+ this.id+".json",this.blog)
+        .then(function(data){
+        //   console.log(data);
           this.subminted = true;
         });
     }
+  },
+  created(){
+      this.fetchData();
   }
 }
 </script>
@@ -79,23 +85,23 @@ export default {
 
 <style scoped>
 
-#add-blog *{
+#edit-blog *{
  box-sizing: border-box;
 }
 
-#add-blog{
+#edit-blog{
   margin: 20px auto;
   max-width: 600px;
   padding: 20px;
 }
 
-#add-blog h2{
+#edit-blog h2{
   text-align: center;
 }
 
 label{
   display: block;
-  font-weight:bold;
+  font-weight: bold;
   margin: 20px 0 10px;
 }
 

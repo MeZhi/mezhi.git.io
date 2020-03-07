@@ -34,8 +34,9 @@ export default {
  }
  nav{
      background:crimson;
+     box-sizing: border-box;
      padding: 30px 0;
-     margin-bottom: 40px;
+     margin-bottom: 30px;
  }
  .router-link-active{
      background: rgba(255, 255,255, 0.7);

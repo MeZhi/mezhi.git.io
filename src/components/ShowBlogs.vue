@@ -6,13 +6,13 @@
           <router-link v-bind:to="'/blog/'+blog.id">
            <h2 v-rainbow>{{blog.title | toUppercase}}</h2>
           </router-link>
-           <article>{{blog.body | snippet}}</article>
+           <article>{{blog.content | snippet}}</article>
         </div>
     </div>
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
   name: 'show-blogs',
   data () {
@@ -22,10 +22,23 @@ export default {
     }
   },
   created(){
-      this.$http.get('./../static/posts.json')
+      // this.$http.get('https://my-blog-d048a.firebaseio.com/posts.json')
+      axios.get('https://my-blog-d048a.firebaseio.com/posts.json')
       .then(function(data){
-        this.blogs =  data.body.slice(0,10);
-        console.log(this.blogs);
+        // console.log(data.json());
+        return data.data;
+        // this.blogs =  data.body.slice(0,10);
+        // console.log(this.blogs);
+      })
+      .then((data) => {
+        var blogsArray = [];
+        for(let key in data){
+            // console.log(data[key]);
+            data[key].id = key;
+            blogsArray.push(data[key]);
+            // console.log(blogsArray);
+            this.blogs = blogsArray;
+        }
       })
   
     },
@@ -60,6 +73,9 @@ export default {
 #show-blogs{
     max-width: 800px;
     margin: 0 auto;
+}
+#show-blogs h1{
+  text-align: center;
 }
 .single-blog{
     padding: 20px;
